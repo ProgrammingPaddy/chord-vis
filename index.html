@@ -53,7 +53,19 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .vol span{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
 
 /* ---------- key / scale strip ---------- */
-.keystrip{padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.keystrip{padding:8px 12px;display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:12px;align-items:start}
+.ks-left{display:flex;flex-direction:column;gap:6px;min-width:0}
+.scale-info{border-left:1px solid var(--line);padding-left:12px;font-size:11.5px;line-height:1.45;color:var(--muted);max-height:158px;overflow-y:auto}
+.si-head{display:flex;align-items:center;gap:8px;color:var(--text);font-size:12.5px}
+.si-alias{color:var(--faint);font-size:10.5px}
+.si-head .btn{margin-left:auto}
+.si-blurb{font-style:italic;margin:3px 0;color:#b8bdc7}
+.si-line{margin-top:3px}
+.si-cap{margin-top:7px;font-size:10.5px;color:var(--faint)}
+.modesbar{display:flex;gap:3px;margin-top:3px}
+.modecell{flex:1;border:1px solid var(--line2);background:var(--panel2);color:var(--muted);font-size:9.5px;padding:3px 1px;border-radius:4px;cursor:pointer;text-align:center;font-family:inherit}
+.modecell:hover{color:var(--text);background:#2b2e35}
+.modecell.cur{background:var(--accentSoft);border-color:var(--accent);color:#cfe0ff}
 .ks-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .ks-row .lbl{min-width:40px}
 .pillrow{display:flex;gap:4px;flex-wrap:wrap}
@@ -96,10 +108,6 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .pill.best{border-color:rgba(69,184,106,.55);color:#9fd9b2}
 
 .why{border:1px solid var(--line);border-radius:8px;background:var(--inset);display:flex;flex-direction:column;min-width:0;min-height:196px;max-height:240px}
-.why-tabs{display:flex;gap:0;padding:0;border-bottom:1px solid var(--line)}
-.why-tab{border:0;background:transparent;color:var(--faint);padding:7px 12px;font:inherit;font-size:11.5px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
-.why-tab:hover{color:var(--muted)}
-.why-tab.active{color:var(--text);border-bottom-color:var(--accent)}
 .why-body{padding:8px 11px 10px;overflow-y:auto;font-size:12.5px;line-height:1.45;color:#cfd3da}
 .why-body h4{margin:0 0 4px;font-size:12px;color:var(--text);letter-spacing:.01em}
 .why-body .flavor{color:var(--muted);font-style:italic;margin:4px 0 6px}
@@ -109,15 +117,6 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .itable td:nth-child(2){font-weight:600;width:46px}
 .itable td:last-child{color:var(--muted)}
 .tag-in{color:var(--green)} .tag-out{color:var(--amber)}
-.brightness{display:flex;gap:3px;margin:6px 0 2px;align-items:center}
-.brt{flex:1;height:7px;border-radius:2px;background:#2b2e35;border:1px solid var(--line2);cursor:pointer}
-.brt:hover{background:#353942}
-.brt.cur{background:var(--accent);border-color:var(--accent)}
-.brt-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--faint)}
-.ks-mini{display:flex;flex-wrap:wrap;gap:3px;margin:2px 0 6px}
-.mini-chip{font-size:10px;padding:2px 6px;border:1px solid var(--line2);border-radius:4px;cursor:pointer;color:var(--muted)}
-.mini-chip:hover{color:var(--text);background:var(--panel2)}
-.mini-chip.cur{border-color:var(--accent);color:#cfe0ff;background:var(--accentSoft)}
 .why-note{color:var(--muted);font-size:11.5px}
 .kbd{display:inline-block;border:1px solid var(--line2);border-radius:4px;padding:0 5px;background:var(--panel2);font-size:11px}
 
@@ -166,7 +165,10 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .voice-label{font-size:12px;min-width:96px;text-align:center;color:var(--text)}
 .voice-sig{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--accent);letter-spacing:.14em}
 .voice-info{font-size:11px;color:var(--muted);flex:1;min-width:150px}
-.neck-wrap{overflow-x:auto;overflow-y:hidden;background:var(--inset);border:1px solid var(--line);border-radius:8px}
+.guitar-main{display:flex;gap:8px;align-items:stretch}
+.gv-panel{flex:none;width:256px;border:1px solid var(--line);border-radius:8px;background:var(--inset);padding:8px 10px;overflow-y:auto;max-height:206px;font-size:12px;line-height:1.4;color:#cfd3da}
+.gv-panel h4{margin:0 0 4px;font-size:12px;color:var(--text)}
+.neck-wrap{flex:1;min-width:0;overflow-x:auto;overflow-y:hidden;background:var(--inset);border:1px solid var(--line);border-radius:8px}
 #neckSvg{display:block;min-width:1020px;width:100%;height:206px;user-select:none}
 #neckSvg text{font-family:Inter,ui-sans-serif,system-ui,sans-serif}
 .hidden{display:none !important}
@@ -182,10 +184,14 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .modal-close{float:right}
 
 @media(max-width:1050px){
+  .keystrip{grid-template-columns:1fr}
+  .scale-info{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:8px}
   .mid{grid-template-columns:1fr}
   .readout{grid-template-columns:1fr}
   .why{max-height:260px}
   .palette{flex-direction:column;align-items:stretch}
+  .guitar-main{flex-direction:column}
+  .gv-panel{width:auto;max-height:180px}
 }
 </style>
 </head>
@@ -194,20 +200,24 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 
   <!-- ======= KEY / SCALE STRIP ======= -->
   <div class="card keystrip">
-    <div class="ks-row">
-      <span class="lbl">Key</span>
-      <div class="pillrow" id="keyButtons"></div>
-      <button class="btn tiny" id="pinBtn" title="While on, the key follows whatever chord root you select">Pin key to root</button>
-      <div class="ks-spacer"></div>
-      <button class="btn tiny" id="helpBtn" title="How it works">?</button>
+    <div class="ks-left">
+      <div class="ks-row">
+        <span class="lbl">Key</span>
+        <div class="pillrow" id="keyButtons"></div>
+        <button class="btn tiny" id="pinBtn" title="While on, the key follows whatever chord root you select">Pin key to root</button>
+        <div class="ks-spacer"></div>
+        <button class="btn tiny" id="helpBtn" title="How it works">?</button>
+      </div>
+      <div class="ks-row">
+        <span class="lbl">Scale</span>
+        <div class="pillrow" id="scaleButtons"></div>
+      </div>
+      <div class="ks-row">
+        <button class="btn tiny active" id="scaleToggle" title="Show scale dots on the instruments">Overlay</button>
+        <div class="scale-chips" id="scaleChips"></div>
+      </div>
     </div>
-    <div class="ks-row">
-      <span class="lbl">Scale</span>
-      <div class="pillrow" id="scaleButtons"></div>
-      <div class="ks-spacer"></div>
-      <button class="btn tiny active" id="scaleToggle" title="Show scale dots on the instruments">Overlay</button>
-      <div class="scale-chips" id="scaleChips"></div>
-    </div>
+    <div class="scale-info" id="scaleInfo"></div>
   </div>
 
   <!-- ======= BUILDER + READOUT ======= -->
@@ -238,11 +248,6 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
           <div class="matches" id="matches"></div>
         </div>
         <div class="why">
-          <div class="why-tabs">
-            <button class="why-tab active" data-tab="chord">Chord</button>
-            <button class="why-tab" data-tab="key">Key &amp; scale</button>
-            <button class="why-tab" data-tab="voicing">Guitar voicing</button>
-          </div>
           <div class="why-body" id="whyBody"></div>
         </div>
       </div>
@@ -284,13 +289,6 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <button class="btn small" id="sustainToggle">Sustain off</button>
       <button class="btn small" id="octaveDown">Oct −</button>
       <button class="btn small" id="octaveUp">Oct +</button>
-      <div class="sep"></div>
-      <select id="soundSelect" title="Keyboard sound">
-        <option value="piano">Piano</option>
-        <option value="rhodes">Rhodes</option>
-        <option value="pluck">Plucked string</option>
-        <option value="sine">Sine wave</option>
-      </select>
       <div class="ks-spacer"></div>
       <div class="vol"><span>Keys</span><input type="range" id="volKeys" min="0" max="100" value="80"></div>
       <div class="vol"><span>Guitar</span><input type="range" id="volGuitar" min="0" max="100" value="40"></div>
@@ -333,10 +331,14 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
           <button class="btn small" id="voiceNext">▶</button>
           <button class="btn small" id="strumBtn">Strum</button>
         </div>
+        <button class="btn small" id="gvToggle" title="Analysis of the current shape">Voicing info</button>
         <div class="voice-sig" id="voiceSig"></div>
         <div class="voice-info" id="voiceInfo"></div>
       </div>
-      <div class="neck-wrap"><svg id="neckSvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      <div class="guitar-main">
+        <div class="gv-panel hidden" id="gvPanel"></div>
+        <div class="neck-wrap"><svg id="neckSvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      </div>
     </div>
   </section>
 </div>
@@ -353,9 +355,9 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <li><b>lowercase</b> means minor: ii, iii, vi.</li>
       <li><b>°</b> means diminished (vii°); <b>ø</b> means half-diminished, an m7♭5 chord (viiø7); <b>+</b> means augmented (III+).</li>
       <li>A trailing <b>7</b>, <b>9</b>, or <b>13</b> means those extensions are stacked on top: V7, ii9. <b>maj7</b> marks the major seventh specifically: Imaj7.</li>
-      <li><b>sus</b> or <b>5</b> written out means the chord has no 3rd (Vsus4, V5), so it is neither major nor minor. That is also why a no-3rd dominant reads V7(no3) here instead of pretending to be a full V7.</li>
+      <li><b>sus</b> written out means the 3rd is replaced (Vsus4), so the chord is neither major nor minor. Power chords take the plain numeral by rock convention; with no 3rd, the letter case cannot mean anything anyway.</li>
     </ul>
-    <p>Two conventions exist. Strict classical analysis keeps numerals plain (V, V7, viiø7) and would never write Vadd4 or V7(no3); it treats added or omitted tones as texture, not harmony. Chart and Nashville practice happily hangs any chord-symbol suffix on a numeral (Vsus4, IVadd9). The numerals here follow the chart convention: they carry exactly what the chord name says, no more and no less.</p>
+    <p>How professionals actually use these: analysis keeps numerals to standard chord types. Added color tones do not change the numeral (a Cadd4 chord in C major is still just <b>I</b>; the 4 is treated as texture, not harmony), and sonorities without a conventional label, like quartal stacks or a seventh chord missing its 3rd, simply do not get a numeral. This tool follows that practice: if no honest standard numeral exists, none is shown.</p>
     <h3>Why numerals change when the scale changes</h3>
     <p>Each chord in the palette is built by stacking every other note of the current scale. Change the scale and the ingredient notes change, so the chords built from them change too. Natural minor stacks a weak minor chord on degree 5 (v). Harmonic minor exists largely to fix that: raising the 7th degree turns v into a real V7 that pulls hard back to home. Switch between Minor and Harm. Minor and watch degree 5 change.</p>
     <h3>Functions: T, PD, D</h3>
@@ -370,6 +372,25 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <li><b>Flamenco and surf:</b> the Andalusian cadence <b>i ♭VII ♭VI V</b>.</li>
     </ul>
     <p>A good exercise: pick a key, then play any of these patterns from the palette in order and listen for the pull back to I.</p>
+  </div>
+</div>
+
+<!-- ======= 12-TET GUIDE ======= -->
+<div class="modal-backdrop" id="tetModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="btn small modal-close" id="tetClose">Close</button>
+    <h2>The 12-note system</h2>
+    <p>Western music runs on 12 notes: C, C♯, D, E♭, E, F, F♯, G, A♭, A, B♭, B, then C again. That second C is an octave up, and its frequency is exactly double. Every octave repeats the same 12 names, higher or lower; that is why the piano keyboard is the same pattern over and over.</p>
+    <h3>Equal temperament</h3>
+    <p>12-tone equal temperament (12-TET) divides the octave into 12 identical steps called semitones. Each semitone multiplies the frequency by the 12th root of 2, about 1.0595, so twelve steps land exactly on the doubled frequency. A4 is 440 Hz, so A5 is 880.</p>
+    <p>The payoff of making every step identical: every key sounds the same, just higher or lower. A major scale starting on C uses the same step recipe as one starting on F♯, and the recipe is all that matters. That is why the key pills work at all; change the key and every relationship survives intact.</p>
+    <h3>What it looks like on the instruments</h3>
+    <p>On the piano, one semitone is the very next key, black or white. On the guitar, one fret is one semitone, and the frets crowd together up the neck because each step is a frequency ratio rather than a fixed distance; the fret spacing drawn here is the real geometry.</p>
+    <h3>Sharps and flats</h3>
+    <p>In 12-TET, C♯ and D♭ are the same pitch. Which spelling is correct depends on musical context (the same key on the piano is spelled C♯ in D major but D♭ in A♭ major); this tool uses one fixed spelling per note to keep the interface simple.</p>
+    <h3>Scales, keys, chords</h3>
+    <p>A scale is a subset of the 12 notes, usually 7 of them, chosen by a step recipe. A key is a scale plus a home note. Chords are built by stacking scale members. Everything on this page is arithmetic on the same 12 notes.</p>
+    <p>Why 12 in the first place? Dividing the octave into 12 lands remarkably close to the pure ratios ears gravitate toward: 7 semitones is within a tenth of a percent of a perfect 3:2 fifth. Musicians tuned to pure ratios for centuries; 12-TET trades a sliver of that purity for the freedom to play equally well in every key.</p>
   </div>
 </div>
 
@@ -423,12 +444,11 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <li><b>Root / Quality / Extensions</b> build the chord. Blue = selected; green outline = consistent with the notes you clicked by hand.</li>
       <li>The readout shows the chord name, its <b>roman numeral</b> in the current key, and every reasonable interpretation of the selected notes; click one to adopt it.</li>
     </ul>
-    <h3>The "why" panel</h3>
+    <h3>Where the explanations live</h3>
     <ul>
-      <li><b>Chord</b>: interval-by-interval construction and how the chord relates to the current key.</li>
-      <li><b>Key &amp; scale</b>: formula, characteristic tone, parent scale, and a bright↔dark meter of the seven modes (click it to switch).</li>
-      <li><b>Guitar voicing</b>: why the current shape works (string roles, omissions, barres).</li>
-      <li>The panel auto-switches to whatever you touched last.</li>
+      <li><b>Chord panel</b> (beside the readout): interval-by-interval construction and how the chord relates to the current key.</li>
+      <li><b>Scale panel</b> (right side of the key strip): the current scale's character, step pattern in semitones, characteristic tone, parent major, and a clickable modes-of-the-major-scale bar from Lydian down to Locrian. <b>The 12-note system</b> button there explains equal temperament, octaves, and why frets crowd together.</li>
+      <li><b>Voicing info</b> (toggle in the guitar bar): opens an analysis panel beside the neck showing string roles, omissions, and barres for the current shape.</li>
     </ul>
     <h3>"In this key" palette</h3>
     <p>The chords that live in the selected key, as <b>Triads / 7ths / 9ths</b> (9ths fall back to the 7th where the diatonic 9th would be a ♭9). The numeral is the scale degree the chord is built on; the <b>How numerals work</b> button next to the palette is the full guide, symbols and real-world progression examples included. Hovering any chord shows exactly which scale tones were stacked to build it. Corner letters: <b>T</b> tonic, <b>PD</b> pre-dominant, <b>D</b> dominant (major/minor keys). A violet dot marks chords containing the scale's characteristic tone; lean on those to sound like the mode. Pentatonic/blues scales show their degree stacks as triads.</p>
@@ -580,12 +600,11 @@ const FLAVOR={
 
 /* ---------------- state ---------------- */
 const state={root:'C',quality:'maj',extension:'plain',inversion:0,selected:new Set(),
-  source:'chord',multi:true,arpeggio:true,sustain:false,octave:3,sound:'piano',primary:'piano',
+  source:'chord',multi:true,arpeggio:true,sustain:false,octave:3,primary:'piano',
   volMaster:.85,volKeys:.8,volGuitar:.4};
 const scaleState={key:'C',scaleId:'major',enabled:true,pinned:false};
-const teach={tab:'chord',auto:true};
 const G={on:true,pianoOn:true,tuningId:'standard',capo:0,lefty:false,showFingers:false,
-  neckMode:'chord',frets:18,voicings:[],vIndex:0,specKey:'',spec:null,
+  neckMode:'chord',frets:18,showInfo:false,voicings:[],vIndex:0,specKey:'',spec:null,
   userFrets:null,userShape:null,bestExact:null};
 let palSize=4;
 
@@ -720,28 +739,12 @@ function pianoVoice(midi,duration){
     made.push({osc,gain:g})}
   return made}
 function startNote(midi,dur=null){
+  // keyboard voice is always piano: sampled when loaded, additive synth offline
   ensureAudio();stopNote(midi);
-  const now=audioCtx.currentTime,duration=dur??(state.sustain?8:1.4);
-  if(state.sound==='pluck'){const n=playPluck(midi,0,1,keysBus);active.set(midi,[n]);
-    setTimeout(()=>active.delete(midi),3200);return}
-  if(state.sound==='piano'){
-    const made=SAMPLES.piano.ready?[playSample(SAMPLES.piano,midi,duration,keysBus,.95)]:pianoVoice(midi,duration);
-    active.set(midi,made);
-    setTimeout(()=>active.delete(midi),(duration+.6)*1000);return}
-  const partials=state.sound==='rhodes'
-    ?[[1,.11,'sine'],[2,.075,'sine'],[3,.035,'triangle'],[4,.012,'sine']]
-    :[[1,.13,'sine']];
-  const made=[];
-  partials.forEach(([mul,vol,type])=>{
-    const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
-    osc.type=type;osc.frequency.value=freq(midi)*mul;
-    gain.gain.setValueAtTime(.0001,now);
-    gain.gain.exponentialRampToValueAtTime(vol,now+.018);
-    gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
-    osc.connect(gain).connect(keysBus);osc.start(now);osc.stop(now+duration+.05);
-    made.push({osc,gain})});
+  const duration=dur??(state.sustain?8:1.4);
+  const made=SAMPLES.piano.ready?[playSample(SAMPLES.piano,midi,duration,keysBus,.95)]:pianoVoice(midi,duration);
   active.set(midi,made);
-  setTimeout(()=>active.delete(midi),(duration+.1)*1000)}
+  setTimeout(()=>active.delete(midi),(duration+.6)*1000)}
 function playNotes(notes=[...state.selected]){
   const arr=[...notes].sort((a,b)=>a-b);if(!arr.length)return;
   if(state.arpeggio)arr.forEach((m,i)=>setTimeout(()=>startNote(m,state.sustain?8:1.4),i*145));
@@ -758,7 +761,6 @@ function strumVoicing(v){
 function selectChord(play=true){
   state.source='chord';G.userFrets=null;state.selected=new Set(chordMidi());
   if(scaleState.pinned)scaleState.key=state.root;
-  if(teach.auto)teach.tab='chord';
   render(); // render first so the guitar voicing exists before we play it
   if(play)playSelection()}
 function playSelection(){
@@ -823,18 +825,33 @@ function bestNameForPcs(pcsArr,preferRootPc){
 /* ---------------- scale / key ---------------- */
 function scalePcs(){return curScale().ints.map(i=>mod(pc(scaleState.key)+i))}
 function romanFor(rootName,qualityId,extId){
-  // The numeral mirrors the chord's actual name, so it never claims tones the
-  // chord doesn't have: Gsus4 is Vsus4 (not V), B5 is V5, B7(no3) is V7(no3).
+  // Numerals follow professional usage: standard chord types get standard
+  // symbols, color-tone adds keep the plain triad numeral (an analyst calls
+  // Cadd4 in C simply "I"), and sonorities with no conventional numeral
+  // (quartal stacks, no-3rd sevenths) get none.
   const pcs=scalePcs(),r=pc(rootName),idx=pcs.indexOf(r);
   if(idx<0||idx>6)return null;
-  let roman=ROMANS[idx];
-  if(['min','dim'].includes(qualityId))roman=roman.toLowerCase();
-  if(extId==='m7b5')return roman.toLowerCase()+'ø7';
-  const qual=QUALITIES.find(x=>x.id===qualityId),ext=EXTENSIONS.find(x=>x.id===extId);
-  let suffix=nameFor(rootName,qual,ext).slice(rootName.length);
-  suffix=suffix.replace(/^m(?!aj)/,'');            // the lowercase numeral already says "minor"
-  suffix=suffix.replace(/^dim/,'°').replace(/^aug/,'+'); // ° and + replace the words
-  return roman+suffix}
+  const upper=ROMANS[idx],lower=upper.toLowerCase();
+  switch(extId){
+    case 'm7b5':return lower+'ø7';
+    case 'dim7':return lower+'°7';
+    case 'mMaj7':return lower+'(maj7)';
+    case 'augMaj7':return upper+'maj7♯5';
+    case 'aug7':return upper+'+7';
+    case '7sus4':return upper+'7sus4'}
+  if(qualityId==='quartal')return null;
+  if(qualityId==='5')return extId==='plain'?upper:null;
+  if(qualityId==='sus2'||qualityId==='sus4')return extId==='plain'?upper+qualityId:null;
+  if(qualityId==='dim')return extId==='plain'?lower+'°':null;
+  if(qualityId==='aug')return extId==='plain'?upper+'+':null;
+  if(qualityId==='min'&&extId==='maj7')return lower+'(maj7)';
+  if(qualityId==='min'&&['7b9','7s9','7s11','7b13'].includes(extId))return null;
+  const base=qualityId==='min'?lower:upper;
+  const SUF={plain:'',add2:'',add4:'',add6:'6',add9:'add9',add11:'',add13:'',
+    '7':'7',maj7:'maj7','9':'9',maj9:'maj9',m9:'9','11':'11',maj11:'maj11',m11:'11',
+    '13':'13',maj13:'maj13',m13:'13','7b9':'7♭9','7s9':'7♯9','7s11':'7♯11','7b13':'7♭13'};
+  const s=SUF[extId];
+  return s===undefined?null:base+s}
 const FUNC_MAJOR=['T','PD','T','PD','D','T','D'];
 const FUNC_MINOR=['T','PD','T','PD','D','PD','D'];
 const SEV_MAP={'4,7,11':['maj','maj7'],'4,7,10':['maj','7'],'3,7,10':['min','7'],'3,6,10':['min','m7b5'],
@@ -1121,7 +1138,6 @@ function pressGuitar(s,f){
   if(G.userFrets[s]===f)G.userFrets[s]=null;
   else{G.userFrets[s]=f;playGuitarNote(tuning().midis[s]+f)}
   state.selected=new Set(G.userFrets.map((fr,ss)=>fr==null?null:tuning().midis[ss]+fr).filter(x=>x!==null));
-  if(teach.auto)teach.tab='chord';
   render()}
 function renderGuitar(){
   if(!G.on)return;
@@ -1231,7 +1247,8 @@ function renderGuitar(){
   else if(G.spec&&!G.voicings.length){
     label.textContent='no shape';sig.textContent='';
     infoEl.textContent='no playable shape in this tuning'}
-  else{label.textContent='–';sig.textContent='';infoEl.textContent=''}}
+  else{label.textContent='–';sig.textContent='';infoEl.textContent=''}
+  if(G.showInfo)$('gvPanel').innerHTML=explainVoicingHTML()}
 
 /* ---------------- teaching: why panel ---------------- */
 function chordFlavorKey(){
@@ -1275,27 +1292,31 @@ function explainChordHTML(){
   else
     html+=`<div class="why-note" style="margin-top:5px">In ${scLabel}: <span class="tag-out">${outside.map(pcName).join(', ')} ${outside.length>1?'are':'is'} outside the scale</span>, borrowed/chromatic color.</div>`;
   return html}
-function explainKeyHTML(){
+function renderScaleInfo(){
+  const el=$('scaleInfo');if(!el)return;
   const info=SCALE_INFO[scaleState.scaleId],sc=curScale(),ints=sc.ints,N=ints.length;
-  const steps=[];
-  for(let i=0;i<N;i++){const d=mod(ints[(i+1)%N]-ints[i]);steps.push(d===2?'W':d===1?'H':d===3?'W+H':d+'st')}
-  let html=`<h4>${scaleState.key} ${sc.label}${info.alias?` (${info.alias})`:''}</h4>`;
-  html+=`<div class="ks-mini">${SCALES.map(s=>`<span class="mini-chip ${s.id===scaleState.scaleId?'cur':''}" data-sc="${s.id}" title="${SCALE_INFO[s.id].vs}">${s.label}</span>`).join('')}</div>`;
-  html+=`<div class="flavor">${info.blurb}</div>`;
-  html+=`<div class="why-note"><b>${info.vs}</b> · step pattern ${steps.join('-')}</div>`;
+  const steps=[];for(let i=0;i<N;i++)steps.push(mod(ints[(i+1)%N]-ints[i]));
+  let html=`<div class="si-head"><b>${scaleState.key} ${sc.label}</b>${info.alias?`<span class="si-alias">${info.alias}</span>`:''}<button class="btn tiny" id="tetBtn">The 12-note system</button></div>`;
+  html+=`<div class="si-blurb">${info.blurb}</div>`;
+  html+=`<div class="si-line"><b>${info.vs}</b> Steps between notes: ${steps.join(' · ')} semitones.</div>`;
   if(info.char!=null){
     const cp=mod(pc(scaleState.key)+info.char);
-    html+=`<div class="why-note" style="margin-top:4px">Characteristic tone: <b style="color:var(--violet)">${pcName(cp)}</b> (${DEGREE_LABELS[info.char]}), the note that separates this scale from plain major or minor.</div>`}
+    html+=`<div class="si-line">Characteristic tone: <b style="color:var(--violet)">${pcName(cp)}</b> (${DEGREE_LABELS[info.char]}), the note that sets it apart from plain major or minor.</div>`}
   if(DIATONIC_OFFSET[scaleState.scaleId]!==undefined&&scaleState.scaleId!=='major'){
     const parent=mod(pc(scaleState.key)-DIATONIC_OFFSET[scaleState.scaleId]);
-    html+=`<div class="why-note" style="margin-top:4px">Same notes as <b>${pcName(parent)} major</b>, but ${scaleState.key} is home base; that re-centering is what a mode is.</div>`}
+    html+=`<div class="si-line">Same notes as <b>${pcName(parent)} major</b>; ${scaleState.key} is home base, and that re-centering is what a mode is.</div>`}
   if(scaleState.scaleId==='minpent')
-    html+=`<div class="why-note" style="margin-top:4px">Same notes as <b>${pcName(mod(pc(scaleState.key)+3))} major pentatonic</b>: relative shapes, different home.</div>`;
-  html+=`<div class="why-note" style="margin-top:7px">Modes of the major scale, bright → dark:</div>`;
-  html+=`<div class="brightness">${BRIGHT_IDS.map(id=>`<div class="brt ${id===scaleState.scaleId?'cur':''}" data-bm="${id}" title="${SCALES.find(s=>s.id===id).label}"></div>`).join('')}</div>`;
-  html+=`<div class="brt-lbl"><span>Lydian</span><span>Locrian</span></div>`;
-  html+=`<div class="why-note" style="margin-top:3px">Each step darker flattens exactly one more degree.</div>`;
-  return html}
+    html+=`<div class="si-line">Same notes as <b>${pcName(mod(pc(scaleState.key)+3))} major pentatonic</b>: relative shapes, different home.</div>`;
+  const SHORT={lydian:'Lydian',major:'Major',mixolydian:'Mixolyd.',dorian:'Dorian',minor:'Minor',phrygian:'Phrygian',locrian:'Locrian'};
+  const FLAT_CHAIN=['restores the ♯4','flattens the 7','flattens the 3','flattens the 6','flattens the 2','flattens the 5'];
+  const curIdx=BRIGHT_IDS.indexOf(scaleState.scaleId);
+  html+=`<div class="si-cap">Modes of the major scale, brightest to darkest. Each step right lowers exactly one degree (the 4, then 7, 3, 6, 2, 5):</div>`;
+  html+=`<div class="modesbar">${BRIGHT_IDS.map(id=>`<button class="modecell ${id===scaleState.scaleId?'cur':''}" data-bm="${id}" title="${SCALES.find(s=>s.id===id).label}: ${SCALE_INFO[id].vs}">${SHORT[id]}</button>`).join('')}</div>`;
+  if(curIdx>0)html+=`<div class="si-cap">One step brighter ${curIdx<=1?'raises the 4':'restores the '+['','','7','3','6','2','5'][curIdx]}; one step darker ${curIdx<6?FLAT_CHAIN[curIdx].replace('restores the ♯4','flattens the 7'):'is as dark as it gets'}.</div>`;
+  else if(curIdx===0)html+=`<div class="si-cap">Lydian is the brightest mode; one step darker restores the natural 4 (plain major).</div>`;
+  el.innerHTML=html;
+  el.querySelectorAll('[data-bm]').forEach(b=>b.onclick=()=>{scaleState.scaleId=b.dataset.bm;render()});
+  const tb=el.querySelector('#tetBtn');if(tb)tb.onclick=()=>$('tetModal').classList.add('open')}
 function roleForPc(p,rootPc){
   const base=rootPc??(G.spec?G.spec.rootPc:null);
   if(base===null)return 'tone';
@@ -1331,12 +1352,7 @@ function explainVoicingHTML(){
   if(G.spec.forcedDrops.length)bits.push(`this chord has more tones than strings; dropped ${G.spec.forcedDrops.map(pcName).join(', ')} by priority`);
   html+=`<div class="why-note">${bits.map(b=>'• '+b).join('<br>')}</div>`;
   return html}
-function renderWhy(){
-  document.querySelectorAll('.why-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===teach.tab));
-  const body=$('whyBody');
-  body.innerHTML=teach.tab==='chord'?explainChordHTML():teach.tab==='key'?explainKeyHTML():explainVoicingHTML();
-  body.querySelectorAll('[data-bm]').forEach(el=>el.onclick=()=>{scaleState.scaleId=el.dataset.bm;if(teach.auto)teach.tab='key';render()});
-  body.querySelectorAll('[data-sc]').forEach(el=>el.onclick=()=>{scaleState.scaleId=el.dataset.sc;if(teach.auto)teach.tab='key';render()})}
+function renderChordInfo(){$('whyBody').innerHTML=explainChordHTML()}
 
 /* ---------------- key strip + palette ---------------- */
 function buildKeyStrip(){
@@ -1344,17 +1360,17 @@ function buildKeyStrip(){
     const b=document.createElement('button');b.className='kbtn';b.textContent=r;b.dataset.key=r;
     b.onclick=()=>{scaleState.key=r;
       if(scaleState.pinned&&r!==state.root){scaleState.pinned=false;$('pinBtn').classList.remove('active')}
-      if(teach.auto)teach.tab='key';render()};
+      render()};
     $('keyButtons').appendChild(b)});
   SCALES.forEach(sc=>{
     const b=document.createElement('button');b.className='kbtn scale';b.dataset.scale=sc.id;
     b.textContent=sc.label;b.title=SCALE_INFO[sc.id].alias||sc.label;
-    b.onclick=()=>{scaleState.scaleId=sc.id;if(teach.auto)teach.tab='key';render()};
+    b.onclick=()=>{scaleState.scaleId=sc.id;render()};
     $('scaleButtons').appendChild(b)});
   $('pinBtn').onclick=()=>{
     scaleState.pinned=!scaleState.pinned;
     $('pinBtn').classList.toggle('active',scaleState.pinned);
-    if(scaleState.pinned){scaleState.key=state.root;if(teach.auto)teach.tab='key'}
+    if(scaleState.pinned)scaleState.key=state.root;
     render()};
   $('scaleToggle').onclick=()=>{scaleState.enabled=!scaleState.enabled;
     $('scaleToggle').classList.toggle('active',scaleState.enabled);render()}}
@@ -1418,7 +1434,6 @@ function press(midi){
   if(!state.multi){[...state.selected].forEach(stopNote);state.selected.clear();state.selected.add(midi);startNote(midi)}
   else if(state.selected.has(midi)){state.selected.delete(midi);stopNote(midi)}
   else{state.selected.add(midi);startNote(midi)}
-  if(teach.auto)teach.tab='chord';
   render()}
 
 /* ---------------- builder controls ---------------- */
@@ -1462,8 +1477,13 @@ function render(){
   let badgeRoot=null,badgeQ=null,badgeE=null;
   if(!manual&&selected.length){badgeRoot=state.root;badgeQ=state.quality;badgeE=state.extension}
   else if(bestExact){badgeRoot=bestExact.root;badgeQ=bestExact.quality;badgeE=bestExact.extension}
-  const roman=badgeRoot?romanFor(badgeRoot,badgeQ,badgeE):null;
-  if(!selected.length||(manual&&!bestExact&&selPcsNow.length>1)){badge.style.display='none'}
+  let roman=null,allIn=false;
+  if(badgeRoot){
+    roman=romanFor(badgeRoot,badgeQ,badgeE);
+    const qq=QUALITIES.find(x=>x.id===badgeQ),ee=EXTENSIONS.find(x=>x.id===badgeE);
+    const sset=new Set(scalePcs());
+    allIn=intervals(qq,ee).every(iv=>sset.has(mod(pc(badgeRoot)+iv)))}
+  if(!selected.length||(manual&&!bestExact&&selPcsNow.length>1)||(!roman&&allIn)){badge.style.display='none'}
   else{badge.style.display='';
     if(roman){badge.textContent=roman+' in '+scaleState.key+' '+curScale().label;badge.classList.remove('chromatic')}
     else{badge.textContent='outside '+scaleState.key+' '+curScale().label;badge.classList.add('chromatic')}}
@@ -1492,9 +1512,10 @@ function render(){
     p.onclick=()=>{state.root=m.root;state.quality=m.quality;state.extension=m.extension;state.inversion=0;selectChord(true)};
     box.appendChild(p)});
   renderKeyStrip();
+  renderScaleInfo();
   renderPalette();
   renderGuitar();
-  renderWhy()}
+  renderChordInfo()}
 
 /* ---------------- wiring ---------------- */
 function buildGuitarControls(){
@@ -1517,15 +1538,18 @@ function buildGuitarControls(){
     document.querySelectorAll('#neckSeg button').forEach(x=>x.classList.toggle('on',x===b));
     render()});
   $('voicePrev').onclick=()=>{if(!G.voicings.length)return;G.vIndex=(G.vIndex-1+G.voicings.length)%G.voicings.length;
-    if(teach.auto)teach.tab='voicing';strumVoicing(currentVoicing());render()};
+    strumVoicing(currentVoicing());render()};
   $('voiceNext').onclick=()=>{if(!G.voicings.length)return;G.vIndex=(G.vIndex+1)%G.voicings.length;
-    if(teach.auto)teach.tab='voicing';strumVoicing(currentVoicing());render()};
-  $('strumBtn').onclick=()=>{if(teach.auto)teach.tab='voicing';strumVoicing(currentVoicing()||G.userShape);renderWhy()};
+    strumVoicing(currentVoicing());render()};
+  $('strumBtn').onclick=()=>strumVoicing(currentVoicing()||G.userShape);
+  $('gvToggle').onclick=()=>{G.showInfo=!G.showInfo;
+    $('gvToggle').classList.toggle('active',G.showInfo);
+    $('gvPanel').classList.toggle('hidden',!G.showInfo);
+    render()};
   $('guitarToggle').onclick=()=>{G.on=!G.on;$('guitarToggle').classList.toggle('active',G.on);
     $('guitarWrap').classList.toggle('hidden',!G.on);if(G.on){buildNeck();render()}};
   $('pianoToggle').onclick=()=>{G.pianoOn=!G.pianoOn;$('pianoToggle').classList.toggle('active',G.pianoOn);
     $('pianoWrap').classList.toggle('hidden',!G.pianoOn)}}
-document.querySelectorAll('.why-tab').forEach(t=>t.onclick=()=>{teach.tab=t.dataset.tab;renderWhy()});
 document.querySelectorAll('#palSeg button').forEach(b=>b.onclick=()=>{
   if(b.disabled)return;palSize=+b.dataset.size;renderPalette()});
 $('clearBtn').onclick=()=>{[...state.selected].forEach(stopNote);state.selected.clear();G.userFrets=null;state.source='piano';render()};
@@ -1539,7 +1563,6 @@ $('sustainToggle').onclick=()=>{state.sustain=!state.sustain;$('sustainToggle').
   if(!state.sustain)[...active.keys()].forEach(stopNote)};
 $('octaveDown').onclick=()=>{state.octave=Math.max(1,state.octave-1);selectChord()};
 $('octaveUp').onclick=()=>{state.octave=Math.min(5,state.octave+1);selectChord()};
-$('soundSelect').onchange=ev=>{state.sound=ev.target.value};
 $('volMaster').oninput=ev=>{state.volMaster=ev.target.value/100;if(masterGain)masterGain.gain.value=state.volMaster};
 $('volKeys').oninput=ev=>{state.volKeys=ev.target.value/100;if(keysBus)keysBus.gain.value=state.volKeys};
 $('volGuitar').oninput=ev=>{state.volGuitar=ev.target.value/100;if(guitarBus)guitarBus.gain.value=state.volGuitar};
@@ -1552,8 +1575,10 @@ $('numModal').onclick=ev=>{if(ev.target===$('numModal'))$('numModal').classList.
 $('chordHelpBtn').onclick=()=>$('chordModal').classList.add('open');
 $('chordClose').onclick=()=>$('chordModal').classList.remove('open');
 $('chordModal').onclick=ev=>{if(ev.target===$('chordModal'))$('chordModal').classList.remove('open')};
+$('tetClose').onclick=()=>$('tetModal').classList.remove('open');
+$('tetModal').onclick=ev=>{if(ev.target===$('tetModal'))$('tetModal').classList.remove('open')};
 window.addEventListener('keydown',ev=>{
-  if(ev.key==='Escape'){$('helpModal').classList.remove('open');$('numModal').classList.remove('open');$('chordModal').classList.remove('open')}
+  if(ev.key==='Escape')['helpModal','numModal','chordModal','tetModal'].forEach(id=>$(id).classList.remove('open'));
   if(ev.target.tagName==='SELECT'||ev.target.tagName==='INPUT')return;
   const map={a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12};
   const off=map[ev.key.toLowerCase()];
