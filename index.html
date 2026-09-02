@@ -114,6 +114,10 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .brt:hover{background:#353942}
 .brt.cur{background:var(--accent);border-color:var(--accent)}
 .brt-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--faint)}
+.ks-mini{display:flex;flex-wrap:wrap;gap:3px;margin:2px 0 6px}
+.mini-chip{font-size:10px;padding:2px 6px;border:1px solid var(--line2);border-radius:4px;cursor:pointer;color:var(--muted)}
+.mini-chip:hover{color:var(--text);background:var(--panel2)}
+.mini-chip.cur{border-color:var(--accent);color:#cfe0ff;background:var(--accentSoft)}
 .why-note{color:var(--muted);font-size:11.5px}
 .kbd{display:inline-block;border:1px solid var(--line2);border-radius:4px;padding:0 5px;background:var(--panel2);font-size:11px}
 
@@ -128,7 +132,6 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
 .pal-btn:disabled{opacity:.4;cursor:default}
 .pal-btn .rn{font-weight:700;font-size:13.5px;letter-spacing:-.01em}
 .pal-btn .nm{font-size:10.5px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pal-legend{font-size:10px;color:var(--faint);letter-spacing:.04em;line-height:1.5;margin-top:-1px}
 .pal-btn .fn{position:absolute;top:2px;right:3px;font-size:8.5px;color:var(--faint)}
 .pal-btn .fn.T{color:var(--green)} .pal-btn .fn.PD{color:var(--accent)} .pal-btn .fn.D{color:var(--red)}
 .pal-btn .ch{position:absolute;top:2px;left:3px;width:5px;height:5px;border-radius:50%;background:var(--violet)}
@@ -251,10 +254,11 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
             <button data-size="4" class="on">7ths</button>
             <button data-size="5">9ths</button>
           </div>
+          <button class="btn tiny" id="numHelpBtn">How numerals work</button>
+          <button class="btn tiny" id="chordHelpBtn">How chord names work</button>
         </div>
         <div class="pal-row" id="paletteRow"></div>
       </div>
-      <div class="pal-legend">numeral = scale degree the chord is built on (stacking that scale's own notes, so chords change when the scale does) &nbsp;·&nbsp; UPPERCASE major &nbsp;·&nbsp; lowercase minor &nbsp;·&nbsp; ° diminished &nbsp;·&nbsp; ø half-diminished (m7♭5) &nbsp;·&nbsp; + augmented &nbsp;·&nbsp; 7 / 9 / 13 stacked extensions &nbsp;·&nbsp; hover a chord for its exact construction</div>
     </section>
   </div>
 
@@ -305,15 +309,23 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <div class="guitar-bar">
         <select id="tuningSelect" title="Tuning"></select>
         <select id="capoSelect" title="Capo"></select>
+        <span class="lbl">Frets</span>
+        <div class="seg" id="fretSeg">
+          <button data-fr="18" class="on">18</button>
+          <button data-fr="24">24</button>
+        </div>
         <button class="btn small" id="leftyToggle">Right-handed</button>
         <div class="sep"></div>
-        <span class="lbl">Labels</span>
+        <span class="lbl">Note labels</span>
         <div class="seg" id="neckSeg">
           <button data-nm="chord" class="on">Chord</button>
           <button data-nm="scale">Scale</button>
           <button data-nm="all">All notes</button>
         </div>
-        <button class="btn small" id="fingersToggle" title="Chord dot labels">Notes</button>
+        <div class="seg" id="fingerSeg" title="Chord dot labels">
+          <button data-fm="notes" class="on">Notes</button>
+          <button data-fm="fingers">Fingers</button>
+        </div>
         <div class="sep"></div>
         <div class="voice-nav">
           <button class="btn small" id="voicePrev">◀</button>
@@ -327,6 +339,71 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <div class="neck-wrap"><svg id="neckSvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
     </div>
   </section>
+</div>
+
+<!-- ======= NUMERALS GUIDE ======= -->
+<div class="modal-backdrop" id="numModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="btn small modal-close" id="numClose">Close</button>
+    <h2>How roman numerals work</h2>
+    <p>A numeral names a chord by the scale degree it is built on, not by its letter. In C major the chord on degree 5 is G, so G is written <b>V</b>. In E major, V is B. The letter changes with the key; the relationship does not. That is the whole point: numerals describe the job a chord does in its key, so a progression written in numerals works in every key. Tell a band "one, five, six, four" and it works whether the singer wants G or E♭.</p>
+    <h3>Reading the symbols</h3>
+    <ul>
+      <li><b>UPPERCASE</b> means major: I, IV, V.</li>
+      <li><b>lowercase</b> means minor: ii, iii, vi.</li>
+      <li><b>°</b> means diminished (vii°); <b>ø</b> means half-diminished, an m7♭5 chord (viiø7); <b>+</b> means augmented (III+).</li>
+      <li>A trailing <b>7</b>, <b>9</b>, or <b>13</b> means those extensions are stacked on top: V7, ii9. <b>maj7</b> marks the major seventh specifically: Imaj7.</li>
+      <li><b>sus</b> or <b>5</b> written out means the chord has no 3rd (Vsus4, V5), so it is neither major nor minor. That is also why a no-3rd dominant reads V7(no3) here instead of pretending to be a full V7.</li>
+    </ul>
+    <p>Two conventions exist. Strict classical analysis keeps numerals plain (V, V7, viiø7) and would never write Vadd4 or V7(no3); it treats added or omitted tones as texture, not harmony. Chart and Nashville practice happily hangs any chord-symbol suffix on a numeral (Vsus4, IVadd9). The numerals here follow the chart convention: they carry exactly what the chord name says, no more and no less.</p>
+    <h3>Why numerals change when the scale changes</h3>
+    <p>Each chord in the palette is built by stacking every other note of the current scale. Change the scale and the ingredient notes change, so the chords built from them change too. Natural minor stacks a weak minor chord on degree 5 (v). Harmonic minor exists largely to fix that: raising the 7th degree turns v into a real V7 that pulls hard back to home. Switch between Minor and Harm. Minor and watch degree 5 change.</p>
+    <h3>Functions: T, PD, D</h3>
+    <p>In major and minor keys, chords group into three jobs. <b>Tonic</b> (T) is home: I and vi. <b>Pre-dominant</b> (PD) moves away from home: ii and IV. <b>Dominant</b> (D) builds the tension that resolves home: V and vii°. Most progressions are loops through home, away, tension, home.</p>
+    <h3>Numerals in the wild</h3>
+    <ul>
+      <li><b>Pop:</b> the four-chord loop <b>I V vi IV</b> (or rotated, <b>vi IV I V</b>) powers an enormous share of the charts. Same numerals, thousands of songs.</li>
+      <li><b>50s and doo-wop:</b> <b>I vi IV V</b>, the "Stand By Me" changes.</li>
+      <li><b>Rock:</b> loves borrowing from Mixolydian: <b>I ♭VII IV</b> is the classic-rock move, and minor-key rock leans on <b>i ♭VI ♭VII</b>.</li>
+      <li><b>Blues:</b> the 12-bar form is <b>I7 IV7 V7</b> with dominant 7ths on every chord, cheerfully breaking diatonic rules. That rule-breaking is the blues sound.</li>
+      <li><b>Jazz:</b> the basic cell is <b>ii7 V7 Imaj7</b>, chained through different keys.</li>
+      <li><b>Flamenco and surf:</b> the Andalusian cadence <b>i ♭VII ♭VI V</b>.</li>
+    </ul>
+    <p>A good exercise: pick a key, then play any of these patterns from the palette in order and listen for the pull back to I.</p>
+  </div>
+</div>
+
+<!-- ======= CHORD NAMES GUIDE ======= -->
+<div class="modal-backdrop" id="chordModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="btn small modal-close" id="chordClose">Close</button>
+    <h2>How chord names work</h2>
+    <p>A chord symbol is a recipe read left to right: root letter, then quality, then extras. A bare letter like <b>C</b> means a C major triad (C E G); everything after the letter modifies that default.</p>
+    <h3>Quality</h3>
+    <ul>
+      <li><b>C</b>: major triad, 1 3 5. Major is the unmarked default.</li>
+      <li><b>Cm</b>: minor. The 3rd is lowered a semitone (1 ♭3 5) and nothing else changes.</li>
+      <li><b>Cdim</b> (1 ♭3 ♭5) and <b>Caug</b> (1 3 ♯5): the triad squeezed smaller or stretched larger.</li>
+      <li><b>Csus2 / Csus4</b>: the 3rd is replaced by the 2nd or 4th. With no 3rd, the chord is neither major nor minor.</li>
+      <li><b>C5</b>: root and 5th only, the power chord. Also no 3rd.</li>
+    </ul>
+    <h3>Sevenths and extensions</h3>
+    <ul>
+      <li><b>C7</b>: major triad plus the lowered 7th (♭7). A plain "7" always means the ♭7; this is the dominant sound.</li>
+      <li><b>Cmaj7</b>: the raised (major) 7th instead. One semitone, completely different mood.</li>
+      <li><b>Cm7</b>: minor triad plus ♭7. <b>Cm(maj7)</b>: minor triad with the major 7th.</li>
+      <li><b>C9, C11, C13</b>: keep stacking every other note above the 7th. A 13 chord implies the 7 and 9 underneath it; players drop what they cannot reach.</li>
+    </ul>
+    <h3>Add, alter, omit</h3>
+    <ul>
+      <li><b>add</b> means the tone joins WITHOUT a 7th: Cadd9 = C E G D. Compare C9, which includes the ♭7.</li>
+      <li><b>♭ or ♯ before a number</b> alters that tone: C7♭9, C7♯11. These are the "altered dominant" colors.</li>
+      <li><b>(no3)</b> means the chord omits its 3rd, the tone that decides major versus minor. C7(no3) is C G B♭: a dominant 7th skeleton with no gender. Rock plays this constantly (a power chord with a ♭7 on top), and big voicings drop the 3rd for space. It is spelled out here so a chord never claims a major or minor sound it does not actually contain.</li>
+      <li><b>ø7</b> is half-diminished (m7♭5); <b>°7</b> is fully diminished. Compact symbols for two dark 7th chords.</li>
+    </ul>
+    <h3>Same notes, several names</h3>
+    <p>C6 (C E G A) and Am7 (A C E G) are the same four notes. Which name is right depends on the bass note and the key around it. The interpretation pills exist because that ambiguity is real, not a bug.</p>
+  </div>
 </div>
 
 <!-- ======= HELP ======= -->
@@ -354,14 +431,14 @@ input[type=range]::-moz-range-thumb{width:10px;height:12px;border:0;border-radiu
       <li>The panel auto-switches to whatever you touched last.</li>
     </ul>
     <h3>"In this key" palette</h3>
-    <p>The chords that live in the selected key, as <b>Triads / 7ths / 9ths</b> (9ths fall back to the 7th where the diatonic 9th would be a ♭9). The numeral is the scale degree the chord is built on; the legend under the palette decodes every symbol, and hovering any chord shows exactly which scale tones were stacked to build it. Corner letters: <b>T</b> tonic, <b>PD</b> pre-dominant, <b>D</b> dominant (major/minor keys). A violet dot marks chords containing the scale's characteristic tone; lean on those to sound like the mode. Pentatonic/blues scales show their degree stacks as triads.</p>
+    <p>The chords that live in the selected key, as <b>Triads / 7ths / 9ths</b> (9ths fall back to the 7th where the diatonic 9th would be a ♭9). The numeral is the scale degree the chord is built on; the <b>How numerals work</b> button next to the palette is the full guide, symbols and real-world progression examples included. Hovering any chord shows exactly which scale tones were stacked to build it. Corner letters: <b>T</b> tonic, <b>PD</b> pre-dominant, <b>D</b> dominant (major/minor keys). A violet dot marks chords containing the scale's characteristic tone; lean on those to sound like the mode. Pentatonic/blues scales show their degree stacks as triads.</p>
     <h3>Guitar neck</h3>
     <ul>
       <li>The voicing engine searches real string/fret combinations under hand constraints and ranks playable shapes; classic shapes rank first when they exist. Browse with <b>◀ ▶</b>.</li>
       <li>Muted strings show a red <b>×</b> and a red-tinted string. <b>○</b> = open string. Gold dot = root. The engine drops the most expendable tones (5th first) when a chord has more notes than strings.</li>
       <li><b>Labels</b>: <i>Chord</i> shows just the voicing (plus small scale dots on the string when Overlay is on); <i>Scale</i> names every in-key note on the whole neck; <i>All notes</i> names everything, with out-of-key notes dimmed.</li>
       <li><b>Notes / Fingers</b> switches chord-dot labels between note names and a suggested fingering (barres shown as finger 1; it's a heuristic, trust your hands).</li>
-      <li><b>Tuning</b> and <b>capo</b> recompute everything; fret numbers with a capo are relative to the capo, like real chord charts. Voicings respect the selected <b>inversion</b>: the lowest sounding string carries the bass.</li>
+      <li><b>Tuning</b> and <b>capo</b> recompute everything; fret numbers with a capo are relative to the capo, like real chord charts. The neck shows 18 frets by default and can switch to 24. Voicings respect the selected <b>inversion</b>: the lowest sounding string carries the bass.</li>
       <li><b>Clicking frets builds your own shape</b>: one note per string, exactly where you click. The app names what you built but never adds notes to it. Click a placed note to remove it; clicking a fret on an occupied string moves that string's note. Choosing a chord (builder, palette, or a pill) switches back to engine voicings and replaces your shape.</li>
     </ul>
     <h3>Playback &amp; mixing</h3>
@@ -483,7 +560,7 @@ const FLAVOR={
   m9:'m7 plus the 9th: smooth, neo-soul minor.',
   11:'Dominant 7th with 9 and 11. The 11 clashes with the major 3rd, so real voicings usually drop the 3rd; listen for the sus-like openness.',
   m11:'In minor the 11th does NOT clash with the ♭3; this is the huge, warm minor chord of R&B.',
-  13:'The full dominant stack. In practice you keep root, 3rd, ♭7, 13 and drop the rest; the guitar voicings here do exactly that.',
+  13:'The full dominant stack. In practice you keep root, 3rd, ♭7, 13 and drop the rest.',
   maj13:'maj7 with 9 and 13: the most notes a "pretty" chord can carry.',
   m13:'Minor 13: m7 with 9, 11, 13 available. Deep-cushion jazz minor.',
   '7b9':'Dominant with a flattened 9: flamenco/bebop tension. Contains a dim7 chord inside itself.',
@@ -508,7 +585,7 @@ const state={root:'C',quality:'maj',extension:'plain',inversion:0,selected:new S
 const scaleState={key:'C',scaleId:'major',enabled:true,pinned:false};
 const teach={tab:'chord',auto:true};
 const G={on:true,pianoOn:true,tuningId:'standard',capo:0,lefty:false,showFingers:false,
-  neckMode:'chord',voicings:[],vIndex:0,specKey:'',spec:null,
+  neckMode:'chord',frets:18,voicings:[],vIndex:0,specKey:'',spec:null,
   userFrets:null,userShape:null,bestExact:null};
 let palSize=4;
 
@@ -519,7 +596,6 @@ const TUNINGS=[
   {id:'openg',label:'Open G',midis:[38,43,50,55,59,62]},
   {id:'opend',label:'Open D',midis:[38,45,50,54,57,62]},
   {id:'halfdown',label:'E♭ standard (½ down)',midis:[39,44,49,54,58,63]}];
-const FRETS=15;
 
 /* ---------------- utils ---------------- */
 const $=id=>document.getElementById(id);
@@ -566,8 +642,7 @@ function sampleTotal(){return Object.values(SAMPLES).reduce((a,l)=>a+Object.keys
 function updateSndStatus(){
   const el=$('sndStatus');if(!el)return;
   const got=Object.values(SAMPLES).reduce((a,l)=>a+l.buffers.size,0);
-  el.textContent=sampleFetchesDone<sampleTotal()?`samples ${got}/${sampleTotal()}…`
-    :got===0?'offline: synth sounds':''}
+  el.textContent=(sampleFetchesDone>=sampleTotal()&&got===0)?'synth sounds (offline)':''}
 function makeCtx(){
   if(audioCtx)return;
   audioCtx=new(window.AudioContext||window.webkitAudioContext)();
@@ -676,7 +751,8 @@ function strumVoicing(v){
   const open=openMidis();
   const sounding=[];
   v.frets.forEach((f,s)=>{if(f>=0)sounding.push(open[s]+f)});
-  sounding.forEach((m,i)=>playGuitarNote(m,i*.045,.85))}
+  const gap=state.arpeggio?.16:.045; // arpeggio picks note by note; block chord strums
+  sounding.forEach((m,i)=>playGuitarNote(m,i*gap,.85))}
 
 /* ---------------- chord selection & detection ---------------- */
 function selectChord(play=true){
@@ -868,7 +944,7 @@ function findVoicings(spec){
   if(!spec)return[];
   const open=openMidis(),results=new Map();
   const allPcs=new Set([...spec.required,...spec.optional.map(o=>o.pc)]);
-  const maxRel=FRETS-G.capo;
+  const maxRel=G.frets-G.capo;
   const isStd=G.tuningId==='standard'&&G.capo===0;
   for(let base=1;base<=Math.min(11,maxRel-1);base++){
     const per=[];
@@ -942,6 +1018,13 @@ function evaluate(chosen,spec,results,isStd){
     results.set(sig,{frets:[...frets],midis,covered,omitted,barre,minF,score,sig,
       fingers:assignFingers(frets,barre,minF)})}
 
+function fingersForFrets(frets){
+  const fretted=frets.map((f,s)=>({f,s})).filter(x=>x.f>0);
+  if(!fretted.length)return frets.map(f=>f<0?'x':'0');
+  const minF=Math.min(...fretted.map(x=>x.f));
+  const atMin=fretted.filter(x=>x.f===minF);
+  const barre=fretted.length>4&&atMin.length>=2;
+  return assignFingers(frets,barre,minF)}
 function assignFingers(frets,barre,minF){
   const out=frets.map(f=>f<0?'x':f===0?'0':'');
   const fretted=[];
@@ -963,7 +1046,7 @@ function refreshVoicings(){
     G.specKey=key;
     const rel=G.userFrets.map(f=>f==null?-1:f-G.capo);
     const midis=[];G.userFrets.forEach((f,s)=>{if(f!=null)midis.push(tuning().midis[s]+f)});
-    G.userShape={frets:rel,midis,sig:sigOf(rel)};
+    G.userShape={frets:rel,midis,sig:sigOf(rel),fingers:fingersForFrets(rel)};
     return}
   G.userShape=null;
   const spec=buildChordSpec();
@@ -974,11 +1057,9 @@ function refreshVoicings(){
   G.vIndex=0}
 
 /* ---------------- guitar rendering (SVG) ---------------- */
-const NECK={W:1320,H:206,x0:74,xEnd:1300,yTop:30,yBot:158};
-function rawFretX(f){
-  const range=1-Math.pow(2,-FRETS/12);
-  const t=(1-Math.pow(2,-f/12))/range;
-  return NECK.x0+(NECK.xEnd-NECK.x0)*t}
+const NECK={W:1320,H:206,x0:96,xEnd:1300,yTop:30,yBot:158}; // x0 leaves room for string labels left of the open-note column
+const SCALE_PX=1900; // pixel scale length; fret spacing is physically proportioned
+function rawFretX(f){return NECK.x0+SCALE_PX*(1-Math.pow(2,-f/12))}
 function mirrorX(x){return G.lefty?NECK.W-x:x}
 function posX(f){
   if(f===0)return mirrorX(NECK.x0-26);
@@ -987,20 +1068,26 @@ function stringY(s){ // s=0 low E … 5 high e ; high string drawn at top
   return NECK.yTop+(5-s)*((NECK.yBot-NECK.yTop)/5)}
 function buildNeck(){
   const svg=$('neckSvg');
+  NECK.xEnd=NECK.x0+SCALE_PX*(1-Math.pow(2,-G.frets/12));
+  NECK.W=NECK.xEnd+22;
   svg.setAttribute('viewBox',`0 0 ${NECK.W} ${NECK.H}`);
+  svg.style.minWidth=G.frets>=24?'1300px':'1080px';
   const base=tuning().midis;
   let g='';
   const bx1=Math.min(mirrorX(NECK.x0),mirrorX(NECK.xEnd)),bx2=Math.max(mirrorX(NECK.x0),mirrorX(NECK.xEnd));
   g+=`<rect x="${bx1}" y="${NECK.yTop-12}" width="${bx2-bx1}" height="${NECK.yBot-NECK.yTop+24}" fill="#1f2126" stroke="#2c2f36"/>`;
-  for(let f=0;f<=FRETS;f++){
+  for(let f=0;f<=G.frets;f++){
     const x=mirrorX(rawFretX(f));
     g+=`<line x1="${x}" y1="${NECK.yTop-12}" x2="${x}" y2="${NECK.yBot+12}" stroke="${f===0?'#b9bec9':'#3a3e47'}" stroke-width="${f===0?6:2}"/>`}
-  for(const f of [3,5,7,9,15]){
+  for(const f of [3,5,7,9,15,17,19,21]){
+    if(f>G.frets)continue;
     g+=`<circle cx="${posX(f)}" cy="${(NECK.yTop+NECK.yBot)/2}" r="6" fill="#2b2e35"/>`}
-  g+=`<circle cx="${posX(12)}" cy="${(NECK.yTop+NECK.yBot)/2-26}" r="6" fill="#2b2e35"/>`;
-  g+=`<circle cx="${posX(12)}" cy="${(NECK.yTop+NECK.yBot)/2+26}" r="6" fill="#2b2e35"/>`;
-  for(const f of [1,3,5,7,9,12,15]){
-    if(f>FRETS)continue;
+  for(const f of [12,24]){
+    if(f>G.frets)continue;
+    g+=`<circle cx="${posX(f)}" cy="${(NECK.yTop+NECK.yBot)/2-26}" r="6" fill="#2b2e35"/>`;
+    g+=`<circle cx="${posX(f)}" cy="${(NECK.yTop+NECK.yBot)/2+26}" r="6" fill="#2b2e35"/>`}
+  for(const f of [1,3,5,7,9,12,15,17,19,21,24]){
+    if(f>G.frets)continue;
     g+=`<text x="${posX(f)}" y="${NECK.yBot+34}" font-size="10.5" fill="#6b7078" text-anchor="middle">${f}</text>`}
   for(let s=0;s<6;s++){
     const y=stringY(s),w=2.4-s*.26;
@@ -1016,7 +1103,7 @@ function buildNeck(){
   const hit=svg.querySelector('#gHit');let h='';
   for(let s=0;s<6;s++){
     const y=stringY(s),hh=(NECK.yBot-NECK.yTop)/5;
-    for(let f=G.capo;f<=FRETS;f++){
+    for(let f=G.capo;f<=G.frets;f++){
       const x=f===G.capo?posX(0):posX(f);
       const x1=f===G.capo?x-16:mirrorX(rawFretX(f-1)),x2=f===G.capo?x+16:mirrorX(rawFretX(f));
       const rx=Math.min(x1,x2),rw=Math.abs(x2-x1);
@@ -1055,7 +1142,7 @@ function renderGuitar(){
   /* ----- label / scale layer ----- */
   let sg='';
   if(G.neckMode!=='chord'){
-    for(let s=0;s<6;s++)for(let f=G.capo;f<=FRETS;f++){
+    for(let s=0;s<6;s++)for(let f=G.capo;f<=G.frets;f++){
       const m=tuning().midis[s]+f,p=mod(m);
       const inScale=scaleSet.has(p);
       if(G.neckMode==='scale'&&!inScale)continue;
@@ -1071,7 +1158,7 @@ function renderGuitar(){
   else if(scaleState.enabled){
     // small in-scale markers ON the string, offset toward the nut so chord dots never cover them
     const dx=G.lefty?13:-13;
-    for(let s=0;s<6;s++)for(let f=G.capo+1;f<=FRETS;f++){
+    for(let s=0;s<6;s++)for(let f=G.capo+1;f<=G.frets;f++){
       const m=tuning().midis[s]+f,p=mod(m);
       if(!scaleSet.has(p))continue;
       const x=posX(f)+dx,y=stringY(s);
@@ -1086,13 +1173,14 @@ function renderGuitar(){
       const fAbs=G.userFrets[s];if(fAbs==null)continue;
       const y=stringY(s),m=tuning().midis[s]+fAbs,p=mod(m);
       const isRoot=rootPc!==null&&p===rootPc;
+      const label=G.showFingers?G.userShape.fingers[s]:pcName(m);
       const x=fAbs===G.capo?posX(0):posX(fAbs);
       if(fAbs===G.capo){
         dg+=`<circle cx="${x}" cy="${y}" r="9.5" fill="#1f2126" stroke="${isRoot?'var(--amber)':'var(--accent)'}" stroke-width="2"/>`;
-        dg+=`<text x="${x}" y="${y+3.4}" font-size="9.5" font-weight="600" fill="${isRoot?'#e8b04b':'#cfe0ff'}" text-anchor="middle">${pcName(m)}</text>`}
+        dg+=`<text x="${x}" y="${y+3.4}" font-size="9.5" font-weight="600" fill="${isRoot?'#e8b04b':'#cfe0ff'}" text-anchor="middle">${label}</text>`}
       else{
         dg+=`<circle cx="${x}" cy="${y}" r="10.5" fill="${isRoot?'var(--amber)':'var(--accent)'}"/>`;
-        dg+=`<text x="${x}" y="${y+3.6}" font-size="10" font-weight="700" fill="${isRoot?'#241a05':'#0c1526'}" text-anchor="middle">${pcName(m)}</text>`}}
+        dg+=`<text x="${x}" y="${y+3.6}" font-size="10" font-weight="700" fill="${isRoot?'#241a05':'#0c1526'}" text-anchor="middle">${label}</text>`}}
   }else if(v&&G.spec){
     const bx1=Math.min(mirrorX(NECK.x0),mirrorX(NECK.xEnd)),bx2=Math.max(mirrorX(NECK.x0),mirrorX(NECK.xEnd));
     for(let s=0;s<6;s++){
@@ -1116,7 +1204,7 @@ function renderGuitar(){
   }else{
     const pcsSel=new Set(selectedPCs());
     if(pcsSel.size){
-      for(let s=0;s<6;s++)for(let f=G.capo;f<=FRETS;f++){
+      for(let s=0;s<6;s++)for(let f=G.capo;f<=G.frets;f++){
         const m=tuning().midis[s]+f,p=mod(m);
         if(!pcsSel.has(p))continue;
         const x=f===G.capo?posX(0):posX(f),y=stringY(s);
@@ -1131,19 +1219,18 @@ function renderGuitar(){
   if(state.source==='guitar'&&G.userShape){
     label.textContent='Your shape';
     sig.textContent=G.userShape.sig;
-    infoEl.textContent=(G.bestExact?`reads as ${G.bestExact.name} · `:'')+'exactly what you clicked; pick a chord or a pill for engine voicings'}
+    infoEl.textContent=''}
   else if(v){
     label.textContent=`Voicing ${G.vIndex+1} / ${G.voicings.length}`;
     sig.textContent=v.sig;
     const om=v.omitted.length?`omits ${v.omitted.map(pcName).join(', ')}`:'all tones present';
-    const drops=G.spec.forcedDrops.length?` · had to drop ${G.spec.forcedDrops.map(pcName).join(', ')} (6 strings)`:'';
+    const drops=G.spec.forcedDrops.length?` · dropped ${G.spec.forcedDrops.map(pcName).join(', ')}`:'';
     infoEl.textContent=`${om}${v.barre?' · barre':''}${G.capo?` · frets relative to capo ${G.capo}`:''}${drops}`}
   else if(state.selected.size&&!G.spec){
-    label.textContent='free notes';sig.textContent='';
-    infoEl.textContent='Pick a chord (or an exact match pill) to get fingered voicings.'}
+    label.textContent='free notes';sig.textContent='';infoEl.textContent=''}
   else if(G.spec&&!G.voicings.length){
     label.textContent='no shape';sig.textContent='';
-    infoEl.textContent='No playable voicing found: try fewer extensions, another tuning, or a capo.'}
+    infoEl.textContent='no playable shape in this tuning'}
   else{label.textContent='–';sig.textContent='';infoEl.textContent=''}}
 
 /* ---------------- teaching: why panel ---------------- */
@@ -1153,7 +1240,7 @@ function chordFlavorKey(){
   return ext.id}
 function explainChordHTML(){
   const selected=[...state.selected].sort((a,b)=>a-b);
-  if(!selected.length)return '<h4>Nothing selected</h4><div class="why-note">Pick a chord on the left, tap the palette, or click notes on either instrument.</div>';
+  if(!selected.length)return '<h4>Nothing selected</h4>';
   let rootPc,ivs,label,qualObj,extObj;
   const matches=detect();
   if(state.source==='chord'){rootPc=pc(state.root);qualObj=q();extObj=e();ivs=intervals();label=nameFor(state.root)}
@@ -1161,7 +1248,7 @@ function explainChordHTML(){
     const m=matches.find(x=>x.exact);
     if(!m){
       const pcs=selectedPCs();
-      return `<h4>Free notes: ${pcs.map(pcName).join(' · ')}</h4><div class="why-note">No exact chord matches yet. The pills on the left show partial interpretations; add or remove a note and watch them change.</div>`}
+      return `<h4>Free notes: ${pcs.map(pcName).join(' · ')}</h4><div class="why-note">No exact match.</div>`}
     rootPc=pc(m.root);qualObj=QUALITIES.find(x=>x.id===m.quality);extObj=EXTENSIONS.find(x=>x.id===m.extension);
     ivs=intervals(qualObj,extObj);label=m.name}
   let html=`<h4>${label}: individual notes</h4>`;
@@ -1182,33 +1269,32 @@ function explainChordHTML(){
   const roman=romanFor(pcName(rootPc),qualObj.id,extObj.id);
   const scLabel=`${scaleState.key} ${curScale().label}`;
   if(!outside.length&&roman)
-    html+=`<div class="why-note" style="margin-top:5px">In <b>${scLabel}</b> this is <b class="tag-in">${roman}</b>, fully diatonic. Find it in the palette below.</div>`;
+    html+=`<div class="why-note" style="margin-top:5px">In <b>${scLabel}</b>: <b class="tag-in">${roman}</b>, diatonic.</div>`;
   else if(!outside.length)
     html+=`<div class="why-note" style="margin-top:5px">Every note fits <b>${scLabel}</b>.</div>`;
   else
-    html+=`<div class="why-note" style="margin-top:5px">In ${scLabel}: <span class="tag-out">${outside.map(pcName).join(', ')} ${outside.length>1?'are':'is'} outside the scale</span>, borrowed/chromatic color. Try <span class="kbd">Pin key to root</span> to re-center on it.</div>`;
+    html+=`<div class="why-note" style="margin-top:5px">In ${scLabel}: <span class="tag-out">${outside.map(pcName).join(', ')} ${outside.length>1?'are':'is'} outside the scale</span>, borrowed/chromatic color.</div>`;
   return html}
 function explainKeyHTML(){
   const info=SCALE_INFO[scaleState.scaleId],sc=curScale(),ints=sc.ints,N=ints.length;
   const steps=[];
   for(let i=0;i<N;i++){const d=mod(ints[(i+1)%N]-ints[i]);steps.push(d===2?'W':d===1?'H':d===3?'W+H':d+'st')}
   let html=`<h4>${scaleState.key} ${sc.label}${info.alias?` (${info.alias})`:''}</h4>`;
+  html+=`<div class="ks-mini">${SCALES.map(s=>`<span class="mini-chip ${s.id===scaleState.scaleId?'cur':''}" data-sc="${s.id}" title="${SCALE_INFO[s.id].vs}">${s.label}</span>`).join('')}</div>`;
   html+=`<div class="flavor">${info.blurb}</div>`;
-  html+=`<div class="why-note"><b>${info.vs}</b> · step pattern ${steps.join('–')}</div>`;
+  html+=`<div class="why-note"><b>${info.vs}</b> · step pattern ${steps.join('-')}</div>`;
   if(info.char!=null){
     const cp=mod(pc(scaleState.key)+info.char);
-    html+=`<div class="why-note" style="margin-top:4px">Characteristic tone: <b style="color:var(--violet)">${pcName(cp)}</b> (${DEGREE_LABELS[info.char]}). Chords containing it get a violet dot in the palette; lean on those to sound like this scale, not just major/minor.</div>`}
+    html+=`<div class="why-note" style="margin-top:4px">Characteristic tone: <b style="color:var(--violet)">${pcName(cp)}</b> (${DEGREE_LABELS[info.char]}), the note that separates this scale from plain major or minor.</div>`}
   if(DIATONIC_OFFSET[scaleState.scaleId]!==undefined&&scaleState.scaleId!=='major'){
     const parent=mod(pc(scaleState.key)-DIATONIC_OFFSET[scaleState.scaleId]);
     html+=`<div class="why-note" style="margin-top:4px">Same notes as <b>${pcName(parent)} major</b>, but ${scaleState.key} is home base; that re-centering is what a mode is.</div>`}
   if(scaleState.scaleId==='minpent')
     html+=`<div class="why-note" style="margin-top:4px">Same notes as <b>${pcName(mod(pc(scaleState.key)+3))} major pentatonic</b>: relative shapes, different home.</div>`;
-  html+=`<div class="why-note" style="margin-top:7px"><b>Reading the palette numerals:</b> the number is the scale degree the chord is built on. I = chord on degree 1, V = chord on degree 5. They change when you change the scale because each chord is stacked from that scale's own notes. UPPERCASE = major, lowercase = minor, ° = diminished, ø = half-diminished (m7♭5), + = augmented; a trailing 7, 9, or 13 means those extensions are stacked on top, and sus or 5 is written out because the chord has no 3rd.</div>`;
-  if(BRIGHT_IDS.includes(scaleState.scaleId)||true){
-    html+=`<div class="why-note" style="margin-top:7px">Modes of the major scale, bright → dark (click to switch):</div>`;
-    html+=`<div class="brightness">${BRIGHT_IDS.map(id=>`<div class="brt ${id===scaleState.scaleId?'cur':''}" data-bm="${id}" title="${SCALES.find(s=>s.id===id).label}"></div>`).join('')}</div>`;
-    html+=`<div class="brt-lbl"><span>Lydian</span><span>Locrian</span></div>`;
-    html+=`<div class="why-note" style="margin-top:3px">Each step darker flattens exactly one more degree.</div>`}
+  html+=`<div class="why-note" style="margin-top:7px">Modes of the major scale, bright → dark:</div>`;
+  html+=`<div class="brightness">${BRIGHT_IDS.map(id=>`<div class="brt ${id===scaleState.scaleId?'cur':''}" data-bm="${id}" title="${SCALES.find(s=>s.id===id).label}"></div>`).join('')}</div>`;
+  html+=`<div class="brt-lbl"><span>Lydian</span><span>Locrian</span></div>`;
+  html+=`<div class="why-note" style="margin-top:3px">Each step darker flattens exactly one more degree.</div>`;
   return html}
 function roleForPc(p,rootPc){
   const base=rootPc??(G.spec?G.spec.rootPc:null);
@@ -1219,22 +1305,19 @@ function roleForPc(p,rootPc){
 function explainVoicingHTML(){
   if(!G.on)return '<h4>Guitar hidden</h4><div class="why-note">Turn the guitar back on to see voicing analysis.</div>';
   if(state.source==='guitar'&&G.userShape){
-    if(!G.userShape.midis.length)return '<h4>Your shape</h4><div class="why-note">Click frets to place notes: one per string, click again to remove.</div>';
+    if(!G.userShape.midis.length)return '<h4>Your shape</h4><div class="why-note">No notes placed.</div>';
     const rootPc=G.bestExact?pc(G.bestExact.root):null;
     let html=`<h4>Your shape: ${G.userShape.sig}</h4>`;
-    html+=`<div class="why-note">${G.bestExact?`These notes read as <b>${G.bestExact.name}</b> (other readings in the pills).`:'No exact chord name for these notes yet; the pills show partial readings.'}</div>`;
     html+='<table class="itable">';
     G.userFrets.map((f,s)=>f==null?null:{s,f,m:tuning().midis[s]+f}).filter(Boolean).reverse().forEach(x=>{
       html+=`<tr><td>${x.f===G.capo?'○':x.f-G.capo}</td><td>${midiName(x.m)}</td><td>string ${6-x.s} · ${roleForPc(mod(x.m),rootPc)}</td></tr>`});
     html+='</table>';
-    html+=`<div class="why-note">This is your hand-built fingering; the app never adds notes to it. Pick a chord from the builder, palette, or a pill to compare with engine voicings.</div>`;
     return html}
   const v=currentVoicing();
   if(!v||!G.spec)return '<h4>No voicing</h4><div class="why-note">Choose a chord (or click an exact-match pill) and the engine will search the neck for playable shapes.</div>';
   const open=openMidis();
   const sounding=v.frets.map((f,s)=>f>=0?{s,f,m:open[s]+f}:null).filter(Boolean);
   let html=`<h4>${G.spec.label}: shape ${v.sig}</h4>`;
-  html+=`<div class="why-note">The engine searched every string/fret combination in a 4-fret window, kept only shapes a hand can hold (span, barres, ≤1 gap in the strum), required the essential tones, then ranked by playability. This is #${G.vIndex+1} of ${G.voicings.length}.</div>`;
   html+='<table class="itable">';
   sounding.slice().reverse().forEach(x=>{
     html+=`<tr><td>${x.f===0?'○':x.f}</td><td>${midiName(x.m)}</td><td>string ${6-x.s} · ${roleForPc(mod(x.m))}</td></tr>`});
@@ -1252,7 +1335,8 @@ function renderWhy(){
   document.querySelectorAll('.why-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===teach.tab));
   const body=$('whyBody');
   body.innerHTML=teach.tab==='chord'?explainChordHTML():teach.tab==='key'?explainKeyHTML():explainVoicingHTML();
-  body.querySelectorAll('[data-bm]').forEach(el=>el.onclick=()=>{scaleState.scaleId=el.dataset.bm;if(teach.auto)teach.tab='key';render()})}
+  body.querySelectorAll('[data-bm]').forEach(el=>el.onclick=()=>{scaleState.scaleId=el.dataset.bm;if(teach.auto)teach.tab='key';render()});
+  body.querySelectorAll('[data-sc]').forEach(el=>el.onclick=()=>{scaleState.scaleId=el.dataset.sc;if(teach.auto)teach.tab='key';render()})}
 
 /* ---------------- key strip + palette ---------------- */
 function buildKeyStrip(){
@@ -1373,7 +1457,7 @@ function render(){
     :selPcsNow.length===1?pcName(selPcsNow[0])+' (single note)'
     :bestExact?bestExact.name
     :selPcsNow.map(pcName).join(' · ');
-  $('noteList').textContent=selected.length?selected.map(midiName).join(' · '):'Select notes or choose a chord.';
+  $('noteList').textContent=selected.length?selected.map(midiName).join(' · '):'–';
   const badge=$('romanBadge');
   let badgeRoot=null,badgeQ=null,badgeE=null;
   if(!manual&&selected.length){badgeRoot=state.root;badgeQ=state.quality;badgeE=state.extension}
@@ -1419,7 +1503,15 @@ function buildGuitarControls(){
   $('tuningSelect').onchange=ev=>{G.tuningId=ev.target.value;G.specKey='';buildNeck();render()};
   $('capoSelect').onchange=ev=>{G.capo=+ev.target.value;G.specKey='';buildNeck();render()};
   $('leftyToggle').onclick=()=>{G.lefty=!G.lefty;$('leftyToggle').textContent=G.lefty?'Left-handed':'Right-handed';buildNeck();render()};
-  $('fingersToggle').onclick=()=>{G.showFingers=!G.showFingers;$('fingersToggle').textContent=G.showFingers?'Fingers':'Notes';render()};
+  document.querySelectorAll('#fretSeg button').forEach(b=>b.onclick=()=>{
+    G.frets=+b.dataset.fr;
+    document.querySelectorAll('#fretSeg button').forEach(x=>x.classList.toggle('on',x===b));
+    if(G.userFrets)G.userFrets=G.userFrets.map(f=>f!=null&&f>G.frets?null:f);
+    G.specKey='';buildNeck();render()});
+  document.querySelectorAll('#fingerSeg button').forEach(b=>b.onclick=()=>{
+    G.showFingers=b.dataset.fm==='fingers';
+    document.querySelectorAll('#fingerSeg button').forEach(x=>x.classList.toggle('on',x===b));
+    render()});
   document.querySelectorAll('#neckSeg button').forEach(b=>b.onclick=()=>{
     G.neckMode=b.dataset.nm;
     document.querySelectorAll('#neckSeg button').forEach(x=>x.classList.toggle('on',x===b));
@@ -1454,8 +1546,14 @@ $('volGuitar').oninput=ev=>{state.volGuitar=ev.target.value/100;if(guitarBus)gui
 $('helpBtn').onclick=()=>$('helpModal').classList.add('open');
 $('helpClose').onclick=()=>$('helpModal').classList.remove('open');
 $('helpModal').onclick=ev=>{if(ev.target===$('helpModal'))$('helpModal').classList.remove('open')};
+$('numHelpBtn').onclick=()=>$('numModal').classList.add('open');
+$('numClose').onclick=()=>$('numModal').classList.remove('open');
+$('numModal').onclick=ev=>{if(ev.target===$('numModal'))$('numModal').classList.remove('open')};
+$('chordHelpBtn').onclick=()=>$('chordModal').classList.add('open');
+$('chordClose').onclick=()=>$('chordModal').classList.remove('open');
+$('chordModal').onclick=ev=>{if(ev.target===$('chordModal'))$('chordModal').classList.remove('open')};
 window.addEventListener('keydown',ev=>{
-  if(ev.key==='Escape')$('helpModal').classList.remove('open');
+  if(ev.key==='Escape'){$('helpModal').classList.remove('open');$('numModal').classList.remove('open');$('chordModal').classList.remove('open')}
   if(ev.target.tagName==='SELECT'||ev.target.tagName==='INPUT')return;
   const map={a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12};
   const off=map[ev.key.toLowerCase()];
